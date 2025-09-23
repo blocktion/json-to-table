@@ -1,0 +1,47 @@
+# Source files
+src/
+tsconfig.json
+tsconfig.tsbuildinfo
+
+# Development files
+*.log
+.env*
+.DS_Store
+.vscode/
+.idea/
+
+# Dependencies
+node_modules/
+
+# Build artifacts (keep dist/)
+*.tsbuildinfo
+
+# Test files
+test/
+tests/
+__tests__/
+*.test.*
+*.spec.*
+
+# Documentation
+docs/
+*.md
+!README.md
+
+# Git
+.git/
+.gitignore
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+.travis.yml
+.circleci/
+
+# Editor files
+*.swp
+*.swo
+*~
+
+# OS files
+Thumbs.db

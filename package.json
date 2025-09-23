@@ -1,0 +1,94 @@
+{
+  "name": "@parallaxsolutions/json-to-table",
+  "version": "1.0.0",
+  "description": "A powerful, modular React component for converting JSON data to navigable tables with advanced features like automatic column detection, theming, and sub-table navigation. Part of the Blocktion SaaS project ecosystem.",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./themes": {
+      "import": "./dist/styles/theme.js",
+      "require": "./dist/styles/theme.js",
+      "types": "./dist/styles/theme.d.ts"
+    },
+    "./components": {
+      "import": "./dist/components/index.js",
+      "require": "./dist/components/index.js",
+      "types": "./dist/components/index.d.ts"
+    },
+    "./hooks": {
+      "import": "./dist/hooks/index.js",
+      "require": "./dist/hooks/index.js",
+      "types": "./dist/hooks/index.d.ts"
+    },
+    "./utils": {
+      "import": "./dist/utils/index.js",
+      "require": "./dist/utils/index.js",
+      "types": "./dist/utils/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rimraf dist",
+    "prepublishOnly": "npm run clean && npm run build",
+    "test": "echo \"No tests specified\" && exit 0"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "dependencies": {
+    "json5": "^2.2.3",
+    "react-icons": "^4.12.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "rimraf": "^5.0.0",
+    "typescript": "^5.0.0"
+  },
+  "keywords": [
+    "react",
+    "json",
+    "table",
+    "data-visualization",
+    "navigable-table",
+    "typescript",
+    "theme",
+    "modular",
+    "blocktion",
+    "parallaxsolutions",
+    "saas",
+    "data-grid",
+    "spreadsheet",
+    "excel-like"
+  ],
+  "author": {
+    "name": "Parallax Solutions",
+    "email": "info@parallaxsolutions.org",
+    "url": "https://parallaxsolutions.org"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/parallaxsolutions/json-to-table",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/parallaxsolutions/json-to-table.git"
+  },
+  "bugs": {
+    "url": "https://github.com/parallaxsolutions/json-to-table/issues"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
