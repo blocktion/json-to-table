@@ -75,6 +75,20 @@ export interface TableOptions {
   showRowNumbers?: boolean;
   showColumnCount?: boolean;
   showRowCount?: boolean;
+  // Editing options
+  enableEditing?: boolean;
+  enableRowDeletion?: boolean;
+  enableFieldEditing?: boolean;
+  enableFieldDeletion?: boolean;
+  enableInlineEditing?: boolean;
+  enableBulkOperations?: boolean;
+  editMode?: "inline" | "modal" | "sidebar";
+  validationRules?: Array<{
+    field: string;
+    validator: (value: unknown, row: unknown) => boolean | string;
+    message?: string;
+    required?: boolean;
+  }>;
 }
 
 export interface JsonTableProps {

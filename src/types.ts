@@ -9,3 +9,6 @@ export type {
   ValidationResult,
 } from "./core/DataProcessor";
 export type { ArrayContentAnalysis } from "./utils/arrayUtils";
+
+// Re-export editing types
+export * from "./types/editing";

@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { Column, TableOptions, ProcessedData } from "../../types";
+import { Column, TableOptions, ProcessedData, EditState } from "../../types";
 import { useSorting } from "../../hooks/useSorting";
 import { useFiltering } from "../../hooks/useFiltering";
 import { usePagination } from "../../hooks/usePagination";
@@ -27,6 +27,18 @@ interface TableContainerProps {
     string,
     (value: unknown, row: unknown) => React.ReactNode
   >;
+  // Editing props
+  editState?: EditState;
+  setEditState?: React.Dispatch<React.SetStateAction<EditState>>;
+  onDeleteRow?: (rowIndex: number) => void;
+  onUpdateField?: (rowIndex: number, field: string, value: unknown) => void;
+  onDeleteField?: (rowIndex: number, field: string) => void;
+  onAddField?: (rowIndex: number, field: string, value: unknown) => void;
+  validateField?: (
+    field: string,
+    value: unknown,
+    row: unknown
+  ) => { isValid: boolean; error: string | null };
 }
 
 export const TableContainer: React.FC<TableContainerProps> = ({
@@ -38,6 +50,14 @@ export const TableContainer: React.FC<TableContainerProps> = ({
   onCellClick,
   onNavigateToSubTable,
   customRenderers = {},
+  // Editing props
+  editState,
+  setEditState,
+  onDeleteRow,
+  onUpdateField,
+  onDeleteField,
+  onAddField,
+  validateField,
 }) => {
   const { theme } = useTheme();
 
@@ -266,6 +286,15 @@ export const TableContainer: React.FC<TableContainerProps> = ({
             enableNavigation={enableNavigation}
             showRowNumbers={showRowNumbers}
             customRenderers={customRenderers}
+            // Editing props
+            editState={editState}
+            setEditState={setEditState}
+            onDeleteRow={onDeleteRow}
+            onUpdateField={onUpdateField}
+            onDeleteField={onDeleteField}
+            onAddField={onAddField}
+            validateField={validateField}
+            options={options}
           />
         </StyledTable>
       </TableWrapper>

@@ -6,6 +6,8 @@ A powerful, modular React component for converting JSON data to navigable tables
 
 ## ✨ Features
 
+### Core Features
+
 - **🚀 Automatic Column Detection**: Automatically generates columns from any object structure
 - **🔗 Nested Navigation**: Click on cells to navigate into nested objects and arrays as separate sub-tables
 - **📊 Smart Sorting**: Click column headers to sort data with intelligent type detection
@@ -19,6 +21,19 @@ A powerful, modular React component for converting JSON data to navigable tables
 - **🔧 TypeScript Support**: Fully typed components and utilities
 - **🎭 Multiple Themes**: Built-in theme support
 - **⚡ Performance Optimized**: Memoized operations and efficient rendering
+
+### 🆕 Editing Features
+
+- **✏️ Inline Editing**: Click any cell to edit it directly in the table
+- **🗑️ Row Management**: Delete individual rows or perform bulk operations
+- **🔧 Field Operations**: Add, update, or delete specific fields
+- **✅ Real-time Validation**: Built-in validation system with custom rules
+- **📝 Change Tracking**: Complete audit trail of all modifications
+- **💾 Save/Discard**: Save changes or discard them with confirmation
+- **🎯 Type-specific Editors**: Different editors for text, numbers, booleans, dates, etc.
+- **⌨️ Keyboard Navigation**: Full keyboard support for editing workflows
+- **🔍 Bulk Operations**: Select and operate on multiple rows simultaneously
+- **🎨 Visual Feedback**: Clear indicators for editable fields and validation errors
 
 ## 📦 Installation
 
@@ -83,6 +98,89 @@ function App() {
         maxDepth: 2,
         enableSorting: true,
         enableNavigation: true,
+      }}
+    />
+  );
+}
+```
+
+### Editable Table with Full Editing Capabilities
+
+```tsx
+import React, { useState } from "react";
+import { JsonTable } from "@parallaxsolutions/json-to-table";
+
+const data = [
+  {
+    id: 1,
+    name: "John Doe",
+    email: "john@example.com",
+    age: 30,
+    isActive: true,
+    salary: 75000,
+    department: "Engineering",
+    tags: ["developer", "react"],
+  },
+];
+
+function EditableApp() {
+  const [tableData, setTableData] = useState(data);
+
+  const handleDataChange = (newData, changes) => {
+    console.log("Data changed:", changes);
+    setTableData(newData);
+  };
+
+  const validationRules = [
+    {
+      field: "email",
+      validator: (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
+      message: "Invalid email format",
+    },
+    {
+      field: "age",
+      validator: (value) => value >= 18 && value <= 100,
+      message: "Age must be between 18 and 100",
+    },
+  ];
+
+  return (
+    <JsonTable
+      data={tableData}
+      title="Editable Users Table"
+      options={{
+        // Core features
+        enableSorting: true,
+        enableNavigation: true,
+        enablePagination: true,
+        showRowNumbers: true,
+
+        // Editing features
+        enableEditing: true,
+        enableRowDeletion: true,
+        enableFieldEditing: true,
+        enableFieldDeletion: true,
+        enableInlineEditing: true,
+        enableBulkOperations: true,
+        editMode: "inline",
+        validationRules,
+      }}
+      onDataChange={handleDataChange}
+      onRowDelete={(rowIndex, row) => console.log("Row deleted:", rowIndex)}
+      onFieldUpdate={(rowIndex, field, newValue, oldValue) =>
+        console.log("Field updated:", { rowIndex, field, newValue, oldValue })
+      }
+      customRenderers={{
+        email: (value) => (
+          <a href={`mailto:${value}`} className="text-blue-600 underline">
+            {value}
+          </a>
+        ),
+        isActive: (value) => (
+          <span className={value ? "text-green-600" : "text-red-600"}>
+            {value ? "Active" : "Inactive"}
+          </span>
+        ),
       }}
     />
   );

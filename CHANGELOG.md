@@ -13,6 +13,78 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Comprehensive modular usage examples
 - Enhanced documentation with company context
 
+## [1.1.0] - 2024-01-21
+
+### Added
+
+- **Major Feature: Comprehensive Editing System**
+
+  - Inline editing capabilities for all field types
+  - Row management with selection, deletion, and bulk operations
+  - Field-level operations (add, update, delete)
+  - Real-time validation with custom rules
+  - Change tracking and audit trail
+  - Save/discard functionality with confirmation
+
+- **New Components**:
+
+  - `EditableCell` - Inline editing component with type-specific editors
+  - `RowActions` - Row selection, edit, and delete action buttons
+  - `BulkActions` - Bulk operation controls for multiple rows
+  - `ValidationProvider` - Validation context and management
+  - `ValidationMessage` - Error display component
+
+- **New Hooks**:
+
+  - `useDataMutation` - Data state management and change tracking
+  - `useValidation` - Real-time field validation logic
+
+- **Field Editors**:
+
+  - `TextEditor` - Text input with validation
+  - `NumberEditor` - Number input with type conversion
+  - `BooleanEditor` - Boolean selection dropdown
+  - `DateEditor` - Date/time picker
+  - `SelectEditor` - Custom select dropdown
+  - `createFieldEditor` - Factory function for type-specific editors
+
+- **Enhanced Types**:
+
+  - `EditableTableOptions` - Extended table options with editing capabilities
+  - `DataChange` - Change tracking and audit trail
+  - `ValidationRule` - Custom validation rule definitions
+  - `EditState` - Editing state management
+  - `EditableColumn` - Enhanced column with editing properties
+
+- **User Experience Improvements**:
+
+  - Keyboard navigation (Enter, Escape, Tab)
+  - Visual feedback for editable fields and validation errors
+  - Row selection with checkboxes
+  - Bulk operations interface
+  - Change summary display
+  - Type-specific editing interfaces
+
+- **Developer Experience**:
+  - Comprehensive editing demo (`editing-demo.tsx`)
+  - Implementation examples (`editing-implementation-example.tsx`)
+  - Updated documentation with editing features
+  - Backward compatibility maintained
+
+### Changed
+
+- Extended `TableOptions` interface with editing capabilities
+- Enhanced `JsonTable` component with editing props
+- Updated `TableContainer` and `TableBody` to support editing
+- Improved type safety with new editing types
+
+### Technical Details
+
+- **New Dependencies**: None (uses existing React patterns)
+- **Bundle Size Impact**: ~15 kB additional (editing features)
+- **Backward Compatibility**: 100% maintained
+- **TypeScript**: Full type safety for all new features
+
 ## [1.0.0] - 2024-01-20
 
 ### Added
@@ -90,6 +162,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Version History
 
+- **v1.1.0**: Major editing system with inline editing, row management, validation, and change tracking
 - **v1.0.0**: Initial release with full feature set and modular architecture
 
 ## Contributing
