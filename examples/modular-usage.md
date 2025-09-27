@@ -73,8 +73,49 @@ const customTheme = {
 function App() {
   return (
     <ThemeProvider theme={customTheme}>
-      <JsonTable data={data} title="Custom Themed Table" />
+      <JsonTable data={data} showBreadcrumbs={true} />
     </ThemeProvider>
+  );
+}
+```
+
+## Basic Usage Examples
+
+### Simple Table (no breadcrumbs)
+
+```tsx
+import { JsonTable } from "@parallaxsolutions/json-to-table";
+
+function SimpleTable({ data }) {
+  return (
+    <JsonTable
+      data={data}
+      showBreadcrumbs={false}
+      options={{
+        enableSorting: true,
+        enablePagination: true,
+        pageSize: 25,
+      }}
+    />
+  );
+}
+```
+
+### Table with Navigation Breadcrumbs
+
+```tsx
+import { JsonTable } from "@parallaxsolutions/json-to-table";
+
+function NavigableTable({ data }) {
+  return (
+    <JsonTable
+      data={data}
+      showBreadcrumbs={true} // This is the default
+      options={{
+        enableNavigation: true,
+        enableSorting: true,
+      }}
+    />
   );
 }
 ```

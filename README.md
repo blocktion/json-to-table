@@ -1,8 +1,8 @@
-# @parallaxsolutions/json-to-table
+# @blocktion/json-to-table
 
-A powerful, modular React component for converting JSON data to navigable tables with advanced features like automatic column detection, theming, array merging, type detection, and sub-table navigation. This component is part of the **Blocktion SaaS project** ecosystem developed by [Parallax Solutions](https://parallaxsolutions.org).
+A powerful, modular React component for converting JSON data to navigable tables with advanced features like automatic column detection, theming, array merging, type detection, and sub-table navigation. This component is part of the **Blocktion platform** ecosystem.
 
-> **Note**: This component is used in the Blocktion SaaS project (not yet released) and is now available as an open-source package for the React community.
+> **Note**: This component was originally developed for the [Blocktion platform](https://blocktion.io) - an intelligent workflow automation platform. We've open-sourced this component for anyone to use in their React projects. Read the [root folder README](../../README.md) to understand what Blocktion is.
 
 ## ✨ Features
 
@@ -38,7 +38,7 @@ A powerful, modular React component for converting JSON data to navigable tables
 ## 📦 Installation
 
 ```bash
-npm install @parallaxsolutions/json-to-table
+npm install @blocktion/json-to-table
 ```
 
 ## 🏗️ Modular Usage
@@ -47,34 +47,31 @@ This package is designed with modularity in mind. You can import only what you n
 
 ```tsx
 // Main component
-import { JsonTable } from "@parallaxsolutions/json-to-table";
+import { JsonTable } from "@blocktion/json-to-table";
 
 // Individual components
 import {
   TableContainer,
   TableHeader,
   TableBody,
-} from "@parallaxsolutions/json-to-table/components";
+} from "@blocktion/json-to-table/components";
 
 // Hooks
 import {
   useTableData,
   useSorting,
   usePagination,
-} from "@parallaxsolutions/json-to-table/hooks";
+} from "@blocktion/json-to-table/hooks";
 
 // Themes
 import {
   defaultTheme,
   darkTheme,
   minimalTheme,
-} from "@parallaxsolutions/json-to-table/themes";
+} from "@blocktion/json-to-table/themes";
 
 // Utilities
-import {
-  ArrayAnalyzer,
-  ObjectUtils,
-} from "@parallaxsolutions/json-to-table/utils";
+import { ArrayAnalyzer, ObjectUtils } from "@blocktion/json-to-table/utils";
 ```
 
 ## 🚀 Quick Start
@@ -82,7 +79,7 @@ import {
 ### Basic Table
 
 ```tsx
-import { JsonTable } from "@parallaxsolutions/json-to-table";
+import { JsonTable } from "@blocktion/json-to-table";
 
 const data = [
   { id: 1, name: "John", age: 30, email: "john@example.com" },
@@ -108,7 +105,7 @@ function App() {
 
 ```tsx
 import React, { useState } from "react";
-import { JsonTable } from "@parallaxsolutions/json-to-table";
+import { JsonTable } from "@blocktion/json-to-table";
 
 const data = [
   {
@@ -190,7 +187,7 @@ function EditableApp() {
 ### Advanced Table with All Features
 
 ```tsx
-import { JsonTable } from "@parallaxsolutions/json-to-table";
+import { JsonTable } from "@blocktion/json-to-table";
 
 const data = [
   {
@@ -352,13 +349,20 @@ The component is optimized for performance with:
 - **Virtual Scrolling**: For very large datasets (coming soon)
 - **Lazy Loading**: Nested data is loaded on demand
 
-## 🏢 About Parallax Solutions
+## 🏢 About Blocktion
 
-This package is developed by [Parallax Solutions](https://parallaxsolutions.org), a company specializing in innovative SaaS solutions and developer tools. This component is part of our **Blocktion** project ecosystem - a comprehensive SaaS platform currently in development.
+This package is part of the **Blocktion platform** - an intelligent workflow automation platform that enables you to create, manage, and execute complex workflows through a powerful combination of visual design and advanced orchestration.
 
-### Blocktion Project
+### Blocktion Platform
 
-Blocktion is our flagship SaaS platform that provides powerful data visualization and management tools. This JSON-to-table component was originally developed for Blocktion's data exploration features and is now available to the open-source community.
+[Blocktion](https://blocktion.io) is a sophisticated, enterprise-grade workflow automation platform that transforms complex automation challenges into simple, visual workflows. This JSON-to-table component was originally developed for Blocktion's data exploration and visualization features and is now available to the open-source community.
+
+Read the [root folder README](../../README.md) to learn more about Blocktion's full capabilities, including:
+
+- Visual workflow designer with drag-and-drop interface
+- Advanced block system with rich integrations (Gmail, Twitter, AI/ML services)
+- Intelligent execution engine with path optimization
+- Real-time monitoring and enterprise security features
 
 ## 🤝 Contributing
 
@@ -372,7 +376,7 @@ We welcome contributions from the community! Please feel free to:
 ### Development Setup
 
 ```bash
-git clone https://github.com/parallaxsolutions/json-to-table.git
+git clone https://github.com/blocktion/json-to-table.git
 cd json-to-table
 npm install
 npm run dev
@@ -384,7 +388,7 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## 🔗 Related
 
-- [Parallax Solutions](https://parallaxsolutions.org) - Our company website
+- [Blocktion Platform](https://blocktion.io) - The main workflow automation platform
 - [React](https://reactjs.org/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Tailwind CSS](https://tailwindcss.com/)
@@ -393,6 +397,6 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 For support, questions, or business inquiries:
 
-- Email: info@parallaxsolutions.org
-- GitHub Issues: [Create an issue](https://github.com/parallaxsolutions/json-to-table/issues)
-- Website: [parallaxsolutions.org](https://parallaxsolutions.org)
+- Email: info@blocktion.io
+- GitHub Issues: [Create an issue](https://github.com/blocktion/json-to-table/issues)
+- Website: [blocktion.io](https://blocktion.io)

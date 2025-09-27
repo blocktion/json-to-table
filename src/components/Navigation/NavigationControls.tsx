@@ -1,18 +1,15 @@
 import React from "react";
-import { FiArrowLeft } from "react-icons/fi";
 import { NavigationState } from "../../hooks/useNavigation";
 import { useTheme } from "../../styles/theme-provider";
 
 interface NavigationControlsProps {
   navigationState: NavigationState;
   onNavigateBack: (targetLevel: number) => void;
-  onNavigateToRoot: () => void;
 }
 
 export const NavigationControls: React.FC<NavigationControlsProps> = ({
   navigationState,
   onNavigateBack,
-  onNavigateToRoot,
 }) => {
   const { theme } = useTheme();
 
@@ -60,37 +57,6 @@ export const NavigationControls: React.FC<NavigationControlsProps> = ({
           </React.Fragment>
         ))}
       </div>
-
-      {/* Back to Root Button */}
-      <button
-        onClick={onNavigateToRoot}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          backgroundColor: "transparent",
-          border: "none",
-          color: theme.colors.text.primary,
-          cursor: "pointer",
-          fontSize: theme.typography.fontSize.sm,
-          fontWeight: theme.typography.fontWeight.medium,
-          transition: "color 0.15s ease",
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.color = theme.colors.secondary;
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.color = theme.colors.text.primary;
-        }}
-      >
-        <FiArrowLeft
-          style={{
-            width: "16px",
-            height: "16px",
-            marginRight: theme.spacing.xs,
-          }}
-        />
-        Back to Root Table
-      </button>
     </div>
   );
 };

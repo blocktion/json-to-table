@@ -70,7 +70,6 @@ export const ImprovedJsonTableExamples: React.FC = () => {
         </h2>
         <JsonTable
           data={sampleData}
-          title="Default Theme Table"
           theme="default"
           options={{
             maxDepth: 3,
@@ -130,7 +129,6 @@ export const ImprovedJsonTableExamples: React.FC = () => {
         >
           <JsonTable
             data={sampleData}
-            title="Dark Theme Table"
             theme="dark"
             options={{
               maxDepth: 2,
@@ -156,7 +154,6 @@ export const ImprovedJsonTableExamples: React.FC = () => {
         </h2>
         <JsonTable
           data={sampleData}
-          title="Minimal Theme Table"
           theme="minimal"
           options={{
             maxDepth: 2,
@@ -182,7 +179,6 @@ export const ImprovedJsonTableExamples: React.FC = () => {
         <ThemeProvider theme="dark">
           <JsonTable
             data={sampleData}
-            title="Custom Theme Provider Table"
             options={{
               maxDepth: 3,
               enableSorting: true,
@@ -218,7 +214,6 @@ export const ImprovedJsonTableExamples: React.FC = () => {
         </h2>
         <JsonTable
           data={sampleData}
-          title="Advanced Features Table"
           theme="default"
           options={{
             maxDepth: 4,

@@ -13,15 +13,14 @@ import {
 } from "../styles/styled-components";
 import { TableContainer } from "./Table/TableContainer";
 import { NavigationControls } from "./Navigation/NavigationControls";
-import { BulkActions } from "./Editing/BulkActions";
 import { ValidationProvider } from "./Validation/ValidationProvider";
 
 export const JsonTable: React.FC<JsonTableProps> = ({
   data,
-  title = "Data Table",
   className = "",
   options = {},
   theme = "default",
+  showBreadcrumbs = true,
   onRowClick,
   onCellClick,
   customRenderers = {},
@@ -165,58 +164,16 @@ export const JsonTable: React.FC<JsonTableProps> = ({
 
     return (
       <div className={`w-full ${className}`}>
-        {/* Bulk Actions */}
-        {options.enableBulkOperations && (
-          <BulkActions
-            selectedRows={editState.selectedRows}
-            onBulkDelete={() => bulkDelete(Array.from(editState.selectedRows))}
-            onBulkEdit={() =>
-              setEditState((prev) => ({ ...prev, isBulkMode: true }))
-            }
-            onClearSelection={() =>
-              setEditState((prev) => ({ ...prev, selectedRows: new Set() }))
-            }
-            enableBulkOperations={options.enableBulkOperations || false}
+        {showBreadcrumbs && (
+          <NavigationControls
+            navigationState={navigationState}
+            onNavigateBack={navigateBack}
           />
         )}
-
-        {/* Changes Summary */}
-        {hasChanges && (
-          <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-            <div className="flex justify-between items-center">
-              <span className="text-sm text-yellow-800">
-                {changes.length} pending change{changes.length !== 1 ? "s" : ""}
-              </span>
-              <div className="space-x-2">
-                <button
-                  onClick={saveChanges}
-                  className="px-3 py-1 bg-green-600 text-white rounded text-sm hover:bg-green-700"
-                >
-                  Save
-                </button>
-                <button
-                  onClick={discardChanges}
-                  className="px-3 py-1 bg-gray-600 text-white rounded text-sm hover:bg-gray-700"
-                >
-                  Discard
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        <NavigationControls
-          navigationState={navigationState}
-          onNavigateBack={navigateBack}
-          onNavigateToRoot={() =>
-            navigateToRoot(processedData.validated as unknown[])
-          }
-        />
 
         <TableContainer
           data={effectiveData as any}
           columns={columns}
-          title={navigationState.currentTitle}
           options={options}
           onRowClick={onRowClick}
           onCellClick={onCellClick}

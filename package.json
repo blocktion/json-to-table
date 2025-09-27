@@ -1,5 +1,5 @@
 {
-  "name": "@parallaxsolutions/json-to-table",
+  "name": "@blocktion/json-to-table",
   "version": "1.0.0",
   "description": "A powerful, modular React component for converting JSON data to navigable tables with advanced features like automatic column detection, theming, and sub-table navigation. Part of the Blocktion SaaS project ecosystem.",
   "main": "./dist/index.js",
@@ -80,13 +80,13 @@
     "url": "https://parallaxsolutions.org"
   },
   "license": "MIT",
-  "homepage": "https://github.com/parallaxsolutions/json-to-table",
+  "homepage": "https://github.com/blocktion/json-to-table",
   "repository": {
     "type": "git",
-    "url": "https://github.com/parallaxsolutions/json-to-table.git"
+    "url": "https://github.com/blocktion/json-to-table.git"
   },
   "bugs": {
-    "url": "https://github.com/parallaxsolutions/json-to-table/issues"
+    "url": "https://github.com/blocktion/json-to-table/issues"
   },
   "engines": {
     "node": ">=14.0.0"

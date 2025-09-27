@@ -93,10 +93,10 @@ export interface TableOptions {
 
 export interface JsonTableProps {
   data: unknown[];
-  title?: string;
   className?: string;
   options?: TableOptions;
   theme?: "default" | "minimal" | "dark";
+  showBreadcrumbs?: boolean;
   onRowClick?: (row: unknown, index: number) => void;
   onCellClick?: (value: unknown, column: Column, row: unknown) => void;
   customRenderers?: Record<

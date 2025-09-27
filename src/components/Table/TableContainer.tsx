@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { Column, TableOptions, ProcessedData, EditState } from "../../types";
 import { useSorting } from "../../hooks/useSorting";
 import { useFiltering } from "../../hooks/useFiltering";
@@ -18,7 +18,6 @@ import { TableBody } from "./TableBody";
 interface TableContainerProps {
   data: ProcessedData;
   columns: Column[];
-  title: string;
   options: TableOptions;
   onRowClick?: (row: unknown, index: number) => void;
   onCellClick?: (value: unknown, column: Column, row: unknown) => void;
@@ -44,7 +43,6 @@ interface TableContainerProps {
 export const TableContainer: React.FC<TableContainerProps> = ({
   data,
   columns,
-  title,
   options,
   onRowClick,
   onCellClick,
@@ -68,8 +66,6 @@ export const TableContainer: React.FC<TableContainerProps> = ({
     enableNavigation = true,
     pageSize = 50,
     showRowNumbers = false,
-    showColumnCount = true,
-    showRowCount = true,
   } = options;
 
   const tableData = data.validated as unknown[];
@@ -92,36 +88,6 @@ export const TableContainer: React.FC<TableContainerProps> = ({
     usePagination(filteredData, pageSize, enablePagination);
 
   const displayData = enablePagination ? paginatedData : filteredData;
-
-  const statsText = useMemo(() => {
-    const parts = [];
-
-    if (showRowCount) {
-      const showing = enablePagination
-        ? displayData.length
-        : filteredData.length;
-      const total = filteredData.length;
-
-      if (enablePagination && showing < total) {
-        parts.push(`Showing ${showing} of ${total} rows`);
-      } else {
-        parts.push(`${showing} rows`);
-      }
-    }
-
-    if (showColumnCount) {
-      parts.push(`${columns.length} columns`);
-    }
-
-    return parts.join(" • ");
-  }, [
-    displayData.length,
-    filteredData.length,
-    columns.length,
-    enablePagination,
-    showRowCount,
-    showColumnCount,
-  ]);
 
   const PaginationControls = () => {
     if (!enablePagination || totalPages <= 1) return null;
@@ -209,59 +175,6 @@ export const TableContainer: React.FC<TableContainerProps> = ({
 
   return (
     <StyledTableContainer>
-      {/* Table Header Info */}
-      <div
-        className="mb-4 flex justify-between items-center"
-        style={{
-          marginBottom: theme.spacing.lg,
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <div>
-          <h3
-            className="text-lg font-medium mb-1"
-            style={{
-              fontSize: theme.typography.fontSize.lg,
-              fontWeight: theme.typography.fontWeight.medium,
-              color: theme.colors.text.primary,
-              marginBottom: theme.spacing.xs,
-            }}
-          >
-            {title}
-          </h3>
-          <div
-            style={{
-              fontSize: theme.typography.fontSize.sm,
-              color: theme.colors.text.muted,
-            }}
-          >
-            {statsText}
-          </div>
-        </div>
-
-        {/* Sort indicator */}
-        {sortConfig.key && (
-          <div
-            style={{
-              fontSize: theme.typography.fontSize.sm,
-              color: theme.colors.text.primary,
-              backgroundColor: theme.colors.surface,
-              padding: `${theme.spacing.sm} ${theme.spacing.md}`,
-              borderRadius: theme.borderRadius.lg,
-              border: `1px solid ${theme.colors.border}`,
-            }}
-          >
-            Sorted by:{" "}
-            <span style={{ fontWeight: theme.typography.fontWeight.medium }}>
-              {columns.find((c) => c.key === sortConfig.key)?.displayName}
-            </span>{" "}
-            ({sortConfig.direction})
-          </div>
-        )}
-      </div>
-
       {/* Table */}
       <TableWrapper>
         <StyledTable

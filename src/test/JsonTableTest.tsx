@@ -78,7 +78,6 @@ export const JsonTableTest: React.FC = () => {
         </h2>
         <JsonTable
           data={testData}
-          title="Basic Table Test"
           options={{
             maxDepth: 3,
             enableSorting: true,
@@ -99,7 +98,6 @@ export const JsonTableTest: React.FC = () => {
         </h2>
         <JsonTable
           data={arrayMergingData}
-          title="Array Merging Test"
           options={{
             maxDepth: 2,
             enableSorting: true,
@@ -120,7 +118,6 @@ export const JsonTableTest: React.FC = () => {
         </h2>
         <JsonTable
           data={testData}
-          title="Pagination Test"
           options={{
             maxDepth: 2,
             enableSorting: true,
@@ -142,7 +139,6 @@ export const JsonTableTest: React.FC = () => {
         </h2>
         <JsonTable
           data={testData}
-          title="Custom Renderers Test"
           options={{
             maxDepth: 2,
             enableSorting: true,

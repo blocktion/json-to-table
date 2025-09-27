@@ -111,7 +111,6 @@ export const JsonTableExamples: React.FC = () => {
         </h2>
         <JsonTable
           data={sampleData}
-          title="Basic Users Table"
           options={{
             maxDepth: 2,
             enableSorting: true,
@@ -132,7 +131,6 @@ export const JsonTableExamples: React.FC = () => {
         </h2>
         <JsonTable
           data={sampleData}
-          title="Navigable Users Table"
           options={{
             maxDepth: 3,
             enableSorting: true,
@@ -153,7 +151,6 @@ export const JsonTableExamples: React.FC = () => {
         </h2>
         <JsonTable
           data={sampleData}
-          title="Auto-detected Users"
           options={{
             maxDepth: 3,
             enableSorting: true,
@@ -174,7 +171,6 @@ export const JsonTableExamples: React.FC = () => {
         </h2>
         <JsonTable
           data={sampleData}
-          title="Advanced Users Table"
           options={{
             maxDepth: 3,
             enableSorting: true,
@@ -221,7 +217,6 @@ export const JsonTableExamples: React.FC = () => {
         </h2>
         <JsonTable
           data={complexData}
-          title="Complex User Data"
           options={{
             maxDepth: 4,
             enableSorting: true,
@@ -247,7 +242,6 @@ export const JsonTableExamples: React.FC = () => {
             { id: 3, name: "Bob", tags: ["manager"] },
             { id: 4, name: "Alice", tags: ["developer", "designer"] },
           ]}
-          title="Users with Tags (Merged)"
           options={{
             maxDepth: 2,
             enableSorting: true,
