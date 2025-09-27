@@ -27,6 +27,7 @@ interface TableBodyProps {
   editState?: EditState;
   setEditState?: React.Dispatch<React.SetStateAction<EditState>>;
   onDeleteRow?: (rowIndex: number) => void;
+  onAddRow?: (rowData: unknown, insertIndex?: number) => void;
   onUpdateField?: (rowIndex: number, field: string, value: unknown) => void;
   onDeleteField?: (rowIndex: number, field: string) => void;
   onAddField?: (rowIndex: number, field: string, value: unknown) => void;
@@ -51,6 +52,7 @@ export const TableBody: React.FC<TableBodyProps> = ({
   editState,
   setEditState,
   onDeleteRow,
+  onAddRow,
   onUpdateField,
   onDeleteField,
   onAddField,
@@ -88,6 +90,8 @@ export const TableBody: React.FC<TableBodyProps> = ({
       editingField: field,
     }));
   };
+
+  // Removed handleRowDoubleClick - editing should only be triggered by cell double-click
 
   const handleSaveEdit = (rowIndex: number, field: string, value: unknown) => {
     if (!onUpdateField) return;
@@ -151,11 +155,8 @@ export const TableBody: React.FC<TableBodyProps> = ({
                   rowIndex={index}
                   row={row}
                   isSelected={isRowSelected}
-                  isEditing={isRowEditing || false}
-                  onEdit={() => handleStartEdit(index, "")}
                   onDelete={() => handleDeleteRow(index)}
                   onSelect={(selected) => handleRowSelect(index, selected)}
-                  enableEditing={isFieldEditingEnabled || false}
                   enableDeletion={isRowDeletionEnabled || false}
                 />
               </StyledTableCell>
@@ -185,21 +186,25 @@ export const TableBody: React.FC<TableBodyProps> = ({
                 ? validateField(column.cleanKey, value, row).error
                 : null;
 
+              // Show EditableCell only if a specific field is being edited
               if (isInlineEditingEnabled && isFieldBeingEdited) {
                 return (
-                  <EditableCell
-                    key={column.key}
-                    value={value}
-                    column={column as any}
-                    rowIndex={index}
-                    isEditing={true}
-                    onStartEdit={() => handleStartEdit(index, column.cleanKey)}
-                    onSaveEdit={(newValue) =>
-                      handleSaveEdit(index, column.cleanKey, newValue)
-                    }
-                    onCancelEdit={handleCancelEdit}
-                    validationError={validationError || undefined}
-                  />
+                  <StyledTableCell key={column.key}>
+                    <EditableCell
+                      value={value}
+                      column={column as any}
+                      rowIndex={index}
+                      isEditing={true}
+                      onStartEdit={() =>
+                        handleStartEdit(index, column.cleanKey)
+                      }
+                      onSaveEdit={(newValue) =>
+                        handleSaveEdit(index, column.cleanKey, newValue)
+                      }
+                      onCancelEdit={handleCancelEdit}
+                      validationError={validationError || undefined}
+                    />
+                  </StyledTableCell>
                 );
               }
 
@@ -211,6 +216,11 @@ export const TableBody: React.FC<TableBodyProps> = ({
                   value={value}
                   onNavigateToSubTable={onNavigateToSubTable}
                   onCellClick={onCellClick}
+                  onCellDoubleClick={(value, column, row) => {
+                    if (isInlineEditingEnabled) {
+                      handleStartEdit(index, column.cleanKey);
+                    }
+                  }}
                   enableNavigation={enableNavigation}
                   customRenderers={customRenderers}
                 />

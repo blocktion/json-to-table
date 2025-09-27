@@ -25,7 +25,7 @@ A powerful, modular React component for converting JSON data to navigable tables
 ### 🆕 Editing Features
 
 - **✏️ Inline Editing**: Click any cell to edit it directly in the table
-- **🗑️ Row Management**: Delete individual rows or perform bulk operations
+- **🗑️ Row Management**: Add, delete individual rows or perform bulk operations
 - **🔧 Field Operations**: Add, update, or delete specific fields
 - **✅ Real-time Validation**: Built-in validation system with custom rules
 - **📝 Change Tracking**: Complete audit trail of all modifications
@@ -105,7 +105,7 @@ function App() {
 
 ```tsx
 import React, { useState } from "react";
-import { JsonTable } from "@blocktion/json-to-table";
+import { JsonTable } from "@parallaxsolutions/json-to-table";
 
 const data = [
   {
@@ -163,6 +163,7 @@ function EditableApp() {
         validationRules,
       }}
       onDataChange={handleDataChange}
+      onRowAdd={(rowIndex, row) => console.log("Row added:", rowIndex)}
       onRowDelete={(rowIndex, row) => console.log("Row deleted:", rowIndex)}
       onFieldUpdate={(rowIndex, field, newValue, oldValue) =>
         console.log("Field updated:", { rowIndex, field, newValue, oldValue })

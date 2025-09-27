@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Row Creation Functionality**: Complete implementation of row addition capabilities
+  - `addRow()` function in `useDataMutation` hook
+  - `AddRowButton` and `QuickAddRowButton` components
+  - `"row_add"` type in `DataChange` interface
+  - `onRowAdd` event handler in `EditableTableOptions`
+  - Integration with existing change tracking and validation systems
 - GitHub Actions workflow for automated publishing
 - Comprehensive modular usage examples
 - Enhanced documentation with company context

@@ -14,6 +14,7 @@ import {
 } from "../../styles/styled-components";
 import { TableHeader } from "./TableHeader";
 import { TableBody } from "./TableBody";
+import { QuickAddRowButton } from "../Editing/AddRowButton";
 
 interface TableContainerProps {
   data: ProcessedData;
@@ -30,6 +31,7 @@ interface TableContainerProps {
   editState?: EditState;
   setEditState?: React.Dispatch<React.SetStateAction<EditState>>;
   onDeleteRow?: (rowIndex: number) => void;
+  onAddRow?: (rowData: unknown, insertIndex?: number) => void;
   onUpdateField?: (rowIndex: number, field: string, value: unknown) => void;
   onDeleteField?: (rowIndex: number, field: string) => void;
   onAddField?: (rowIndex: number, field: string, value: unknown) => void;
@@ -52,6 +54,7 @@ export const TableContainer: React.FC<TableContainerProps> = ({
   editState,
   setEditState,
   onDeleteRow,
+  onAddRow,
   onUpdateField,
   onDeleteField,
   onAddField,
@@ -175,6 +178,13 @@ export const TableContainer: React.FC<TableContainerProps> = ({
 
   return (
     <StyledTableContainer>
+      {/* Add Row Button */}
+      {options.enableEditing && onAddRow && (
+        <div className="mb-4 flex justify-end">
+          <QuickAddRowButton onAddRow={onAddRow} className="" />
+        </div>
+      )}
+
       {/* Table */}
       <TableWrapper>
         <StyledTable
@@ -203,6 +213,7 @@ export const TableContainer: React.FC<TableContainerProps> = ({
             editState={editState}
             setEditState={setEditState}
             onDeleteRow={onDeleteRow}
+            onAddRow={onAddRow}
             onUpdateField={onUpdateField}
             onDeleteField={onDeleteField}
             onAddField={onAddField}

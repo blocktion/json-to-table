@@ -164,11 +164,12 @@ export const TableRow: React.FC<
     transition: "background-color 0.15s ease",
   };
 
-  const hoverableStyles = hoverable
-    ? {
-        cursor: "pointer",
-      }
-    : {};
+  const hoverableStyles =
+    hoverable || onClick
+      ? {
+          cursor: "pointer",
+        }
+      : {};
 
   return (
     <tr
@@ -199,8 +200,9 @@ export const TableRow: React.FC<
 export const TableCell: React.FC<
   StyledComponentProps & {
     onClick?: () => void;
+    onDoubleClick?: () => void;
   }
-> = ({ className = "", children, onClick, style }) => {
+> = ({ className = "", children, onClick, onDoubleClick, style }) => {
   const { theme } = useTheme();
 
   return (
@@ -212,6 +214,7 @@ export const TableCell: React.FC<
         ...style,
       }}
       onClick={onClick}
+      onDoubleClick={onDoubleClick}
     >
       {children}
     </td>

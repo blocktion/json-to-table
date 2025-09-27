@@ -182,6 +182,10 @@ export const EditingDemo: React.FC = () => {
     // In a real app, you might want to show a confirmation dialog
   };
 
+  const handleRowAdd = (rowIndex: number, row: unknown) => {
+    console.log("Row added:", rowIndex, row);
+  };
+
   const handleSaveChanges = () => {
     console.log("Saving changes:", changes);
     // In a real app, you would make an API call here
@@ -240,6 +244,7 @@ export const EditingDemo: React.FC = () => {
                   `Row ${change.rowIndex}, ${change.field} deleted`}
                 {change.type === "field_add" &&
                   `Row ${change.rowIndex}, ${change.field} added`}
+                {change.type === "row_add" && `Row ${change.rowIndex} added`}
               </li>
             ))}
           </ul>
@@ -251,6 +256,7 @@ export const EditingDemo: React.FC = () => {
         <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
           <h3 className="font-medium text-blue-800 mb-2">Row Management</h3>
           <ul className="text-sm text-blue-700 space-y-1">
+            <li>• Add new rows with the Add Row button</li>
             <li>• Select rows with checkboxes</li>
             <li>• Delete individual rows</li>
             <li>• Bulk delete operations</li>
@@ -309,6 +315,7 @@ export const EditingDemo: React.FC = () => {
           customRenderers={customRenderers}
           theme="default"
           onDataChange={handleDataChange}
+          onRowAdd={handleRowAdd}
           onRowDelete={handleRowDelete}
           onFieldUpdate={handleFieldUpdate}
           onFieldDelete={handleFieldDelete}
@@ -332,6 +339,7 @@ export const EditingDemo: React.FC = () => {
           <div>
             <h4 className="font-medium mb-1">Row Management:</h4>
             <ul className="space-y-1">
+              <li>• Click "Add Row" button to create new rows</li>
               <li>• Check boxes to select rows</li>
               <li>• Use action buttons to edit/delete</li>
               <li>• Select multiple rows for bulk operations</li>

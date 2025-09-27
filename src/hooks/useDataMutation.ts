@@ -128,6 +128,36 @@ export const useDataMutation = (
     [data]
   );
 
+  const addRow = useCallback(
+    (rowData: unknown, insertIndex?: number) => {
+      const newRow = rowData || {};
+      const insertAt = insertIndex !== undefined ? insertIndex : data.length;
+
+      const change: DataChange = {
+        id: `add_row_${insertAt}_${Date.now()}`,
+        type: "row_add",
+        rowIndex: insertAt,
+        newValue: newRow,
+        timestamp: new Date(),
+        isValid: true,
+      };
+
+      setData((prev) => {
+        const newData = [...prev];
+        newData.splice(insertAt, 0, newRow);
+        return newData;
+      });
+      setChanges((prev) => [...prev, change]);
+
+      options.onRowAdd?.(insertAt, newRow);
+      options.onDataChange?.(
+        [...data.slice(0, insertAt), newRow, ...data.slice(insertAt)],
+        [change]
+      );
+    },
+    [data, options]
+  );
+
   const bulkDelete = useCallback(
     (rowIndices: number[]) => {
       const changes: DataChange[] = rowIndices.map((rowIndex) => ({
@@ -172,6 +202,7 @@ export const useDataMutation = (
     editState,
     setEditState,
     deleteRow,
+    addRow,
     updateField,
     deleteField,
     addField,

@@ -6,6 +6,7 @@ import { useNavigation } from "../hooks/useNavigation";
 import { useDataMutation } from "../hooks/useDataMutation";
 import { useValidation } from "../hooks/useValidation";
 import { ThemeProvider } from "../styles/theme-provider";
+import { enhanceColumnsForEditing } from "../utils/columnEnhancer";
 import {
   LoadingSpinner,
   ErrorMessage,
@@ -24,6 +25,13 @@ export const JsonTable: React.FC<JsonTableProps> = ({
   onRowClick,
   onCellClick,
   customRenderers = {},
+  // Editing event handlers
+  onDataChange,
+  onRowAdd,
+  onRowDelete,
+  onFieldUpdate,
+  onFieldDelete,
+  onBulkDelete,
 }) => {
   const { processedData, isLoading, error } = useTableData(data, options);
 
@@ -37,6 +45,7 @@ export const JsonTable: React.FC<JsonTableProps> = ({
     editState,
     setEditState,
     deleteRow,
+    addRow,
     updateField,
     deleteField,
     addField,
@@ -44,10 +53,15 @@ export const JsonTable: React.FC<JsonTableProps> = ({
     saveChanges,
     discardChanges,
     hasChanges,
-  } = useDataMutation(
-    (processedData?.validated as unknown[]) || [],
-    options as EditableTableOptions
-  );
+  } = useDataMutation(data, {
+    ...options,
+    onDataChange,
+    onRowAdd,
+    onRowDelete,
+    onFieldUpdate,
+    onFieldDelete,
+    onBulkDelete,
+  } as EditableTableOptions);
 
   // Validation
   const { validateField, validateRow } = useValidation(
@@ -78,6 +92,15 @@ export const JsonTable: React.FC<JsonTableProps> = ({
     const currentData = options.enableEditing
       ? editableData
       : navigationState.currentData;
+
+    // If we have no current data, return the original processed data
+    if (
+      !currentData ||
+      (Array.isArray(currentData) && currentData.length === 0)
+    ) {
+      return processedData;
+    }
+
     const isArray = Array.isArray(currentData);
 
     let analyzed;
@@ -113,11 +136,15 @@ export const JsonTable: React.FC<JsonTableProps> = ({
     options.enableEditing,
   ]);
 
-  const columns = useColumnGeneration(effectiveData, {
+  const generatedColumns = useColumnGeneration(effectiveData, {
     maxDepth: options.maxDepth,
     mergeRepeatedColumns: options.mergeRepeatedColumns,
     customRenderers,
   });
+
+  const columns = useMemo(() => {
+    return enhanceColumnsForEditing(generatedColumns, options.enableEditing);
+  }, [generatedColumns, options.enableEditing]);
 
   const renderContent = () => {
     // Loading state
@@ -183,6 +210,7 @@ export const JsonTable: React.FC<JsonTableProps> = ({
           editState={editState}
           setEditState={setEditState}
           onDeleteRow={deleteRow}
+          onAddRow={addRow}
           onUpdateField={updateField}
           onDeleteField={deleteField}
           onAddField={addField}

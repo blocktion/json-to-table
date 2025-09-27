@@ -8,3 +8,9 @@ export { NavigationControls } from "./Navigation/NavigationControls";
 export { TableContainer } from "./Table/TableContainer";
 export { TableHeader } from "./Table/TableHeader";
 export { TableBody } from "./Table/TableBody";
+
+// Editing components
+export { AddRowButton, QuickAddRowButton } from "./Editing/AddRowButton";
+export { RowActions } from "./Editing/RowActions";
+export { BulkActions } from "./Editing/BulkActions";
+export { EditableCell } from "./Editing/EditableCell";

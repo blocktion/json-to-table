@@ -103,6 +103,18 @@ export interface JsonTableProps {
     string,
     (value: unknown, row: unknown) => React.ReactNode
   >;
+  // Editing event handlers
+  onDataChange?: (newData: unknown[], changes: any[]) => void;
+  onRowAdd?: (rowIndex: number, row: unknown) => void;
+  onRowDelete?: (rowIndex: number, row: unknown) => void;
+  onFieldUpdate?: (
+    rowIndex: number,
+    field: string,
+    newValue: unknown,
+    oldValue: unknown
+  ) => void;
+  onFieldDelete?: (rowIndex: number, field: string, value: unknown) => void;
+  onBulkDelete?: (rowIndices: number[]) => void;
 }
 
 // Core module types

@@ -10,6 +10,7 @@ interface CellRendererProps {
   value: unknown;
   onNavigateToSubTable: (path: string, value: unknown, title: string) => void;
   onCellClick?: (value: unknown, column: Column, row: unknown) => void;
+  onCellDoubleClick?: (value: unknown, column: Column, row: unknown) => void;
   enableNavigation: boolean;
   customRenderers?: Record<
     string,
@@ -23,6 +24,7 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
   value,
   onNavigateToSubTable,
   onCellClick,
+  onCellDoubleClick,
   enableNavigation,
   customRenderers = {},
 }) => {
@@ -30,6 +32,10 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
 
   const handleCellClick = () => {
     onCellClick?.(value, column, row);
+  };
+
+  const handleCellDoubleClick = () => {
+    onCellDoubleClick?.(value, column, row);
   };
 
   const handleNavigate = () => {
@@ -71,7 +77,10 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
   // Custom renderer from column definition
   if (column.renderer) {
     return (
-      <TableCell onClick={handleCellClick}>
+      <TableCell
+        onClick={handleCellClick}
+        onDoubleClick={handleCellDoubleClick}
+      >
         {column.renderer(value, row)}
       </TableCell>
     );
@@ -80,7 +89,10 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
   // Custom renderer from props
   if (customRenderers[column.cleanKey]) {
     return (
-      <TableCell onClick={handleCellClick}>
+      <TableCell
+        onClick={handleCellClick}
+        onDoubleClick={handleCellDoubleClick}
+      >
         {customRenderers[column.cleanKey](value, row)}
       </TableCell>
     );
@@ -112,7 +124,10 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
     }
 
     return (
-      <TableCell onClick={handleCellClick}>
+      <TableCell
+        onClick={handleCellClick}
+        onDoubleClick={handleCellDoubleClick}
+      >
         <NavigableCell
           value={value}
           displayText={displayText}
@@ -125,7 +140,7 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
 
   // Regular cell
   return (
-    <TableCell onClick={handleCellClick}>
+    <TableCell onClick={handleCellClick} onDoubleClick={handleCellDoubleClick}>
       <span
         style={{
           color:

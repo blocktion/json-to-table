@@ -17,6 +17,7 @@ export interface EditableTableOptions extends TableOptions {
 
   // Event handlers
   onDataChange?: (newData: unknown[], changes: DataChange[]) => void;
+  onRowAdd?: (rowIndex: number, row: unknown) => void;
   onRowDelete?: (rowIndex: number, row: unknown) => void;
   onFieldUpdate?: (
     rowIndex: number,
@@ -30,7 +31,12 @@ export interface EditableTableOptions extends TableOptions {
 
 export interface DataChange {
   id: string;
-  type: "row_delete" | "field_update" | "field_delete" | "field_add";
+  type:
+    | "row_delete"
+    | "row_add"
+    | "field_update"
+    | "field_delete"
+    | "field_add";
   rowIndex: number;
   field?: string;
   oldValue?: unknown;

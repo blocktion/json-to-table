@@ -24,20 +24,27 @@ export const EditableCell: React.FC<EditableCellProps> = ({
   validationError,
 }) => {
   const [editValue, setEditValue] = useState(value);
+  const [hasUserInteracted, setHasUserInteracted] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => {
-    if (isEditing && inputRef.current) {
-      inputRef.current.focus();
-      inputRef.current.select();
-    }
-  }, [isEditing]);
+  // Remove auto-focus to prevent infinite loops
+  // useEffect(() => {
+  //   if (isEditing && inputRef.current && !hasUserInteracted) {
+  //     // Only focus if this is the first cell and user hasn't interacted yet
+  //     const isFirstCell = column.cleanKey === Object.keys(column).find(key => key === 'cleanKey');
+  //     if (isFirstCell) {
+  //       inputRef.current.focus();
+  //       inputRef.current.select();
+  //     }
+  //   }
+  // }, [isEditing, column.cleanKey, hasUserInteracted]);
 
   useEffect(() => {
     setEditValue(value);
   }, [value]);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
+    setHasUserInteracted(true);
     if (e.key === "Enter") {
       onSaveEdit(editValue);
     } else if (e.key === "Escape") {
@@ -46,7 +53,13 @@ export const EditableCell: React.FC<EditableCellProps> = ({
   };
 
   const handleBlur = () => {
-    onSaveEdit(editValue);
+    // Don't auto-save on blur to prevent infinite loops
+    // User should use Enter key or click save button to save
+  };
+
+  const handleChange = (newValue: unknown) => {
+    setHasUserInteracted(true);
+    setEditValue(newValue);
   };
 
   if (!isEditing) {
@@ -54,7 +67,8 @@ export const EditableCell: React.FC<EditableCellProps> = ({
       <div
         className="cursor-pointer hover:bg-gray-50 p-2 rounded min-h-[2rem] flex items-center"
         onClick={onStartEdit}
-        title={validationError || "Click to edit"}
+        onDoubleClick={onStartEdit}
+        title={validationError || "Click or double-click to edit"}
       >
         {column.renderer ? column.renderer(value, {}) : String(value || "")}
         {validationError && (
@@ -71,7 +85,7 @@ export const EditableCell: React.FC<EditableCellProps> = ({
       <FieldEditor
         ref={inputRef}
         value={editValue}
-        onChange={setEditValue}
+        onChange={handleChange}
         onKeyDown={handleKeyDown}
         onBlur={handleBlur}
         className={`w-full px-2 py-1 border rounded ${
