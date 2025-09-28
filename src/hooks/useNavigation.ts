@@ -42,8 +42,18 @@ export const useNavigation = (initialData: unknown[] = []) => {
   }, [navigationManager]);
 
   const navigateToSubTable = useCallback(
-    (path: string, value: unknown, title: string) => {
-      const result = navigationManager.navigateToSubTable(path, value, title);
+    (
+      path: string,
+      value: unknown,
+      title: string,
+      rootDocumentIndex?: number
+    ) => {
+      const result = navigationManager.navigateToSubTable(
+        path,
+        value,
+        title,
+        rootDocumentIndex
+      );
       if (result.success) {
         setNavigationState((prev) => ({
           ...prev,

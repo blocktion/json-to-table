@@ -23,7 +23,9 @@ export interface EditableTableOptions extends TableOptions {
     rowIndex: number,
     field: string,
     newValue: unknown,
-    oldValue: unknown
+    oldValue: unknown,
+    navigationPath?: string[],
+    rootDocumentIndex?: number
   ) => void;
   onFieldDelete?: (rowIndex: number, field: string, value: unknown) => void;
   onBulkDelete?: (rowIndices: number[]) => void;

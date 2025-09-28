@@ -62,6 +62,7 @@ export interface NavigationStackItem {
   data: unknown[];
   parentTitle: string;
   breadcrumbPath: string[];
+  rootDocumentIndex?: number; // Track which root document this subtable belongs to
 }
 
 export interface TableOptions {
@@ -111,7 +112,9 @@ export interface JsonTableProps {
     rowIndex: number,
     field: string,
     newValue: unknown,
-    oldValue: unknown
+    oldValue: unknown,
+    navigationPath?: string[],
+    rootDocumentIndex?: number
   ) => void;
   onFieldDelete?: (rowIndex: number, field: string, value: unknown) => void;
   onBulkDelete?: (rowIndices: number[]) => void;

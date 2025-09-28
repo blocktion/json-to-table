@@ -8,7 +8,12 @@ interface CellRendererProps {
   column: Column;
   row: unknown;
   value: unknown;
-  onNavigateToSubTable: (path: string, value: unknown, title: string) => void;
+  onNavigateToSubTable: (
+    path: string,
+    value: unknown,
+    title: string,
+    rowIndex?: number
+  ) => void;
   onCellClick?: (value: unknown, column: Column, row: unknown) => void;
   onCellDoubleClick?: (value: unknown, column: Column, row: unknown) => void;
   enableNavigation: boolean;
@@ -16,6 +21,7 @@ interface CellRendererProps {
     string,
     (value: unknown, row: unknown) => React.ReactNode
   >;
+  rowIndex?: number;
 }
 
 export const CellRenderer: React.FC<CellRendererProps> = ({
@@ -27,6 +33,7 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
   onCellDoubleClick,
   enableNavigation,
   customRenderers = {},
+  rowIndex,
 }) => {
   const { theme } = useTheme();
 
@@ -60,7 +67,7 @@ export const CellRenderer: React.FC<CellRendererProps> = ({
       title = `${column.displayName} (Value)`;
     }
 
-    onNavigateToSubTable(column.cleanKey, value, title);
+    onNavigateToSubTable(column.cleanKey, value, title, rowIndex);
   };
 
   const formatValue = (val: unknown): string => {

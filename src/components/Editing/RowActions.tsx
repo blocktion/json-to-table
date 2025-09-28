@@ -19,7 +19,7 @@ export const RowActions: React.FC<RowActionsProps> = ({
   enableDeletion,
 }) => {
   return (
-    <div className="flex items-center space-x-2 group">
+    <div className="flex items-center space-x-2">
       {/* Selection checkbox */}
       <input
         type="checkbox"

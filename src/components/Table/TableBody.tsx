@@ -16,7 +16,12 @@ interface TableBodyProps {
   columns: Column[];
   onRowClick?: (row: unknown, index: number) => void;
   onCellClick?: (value: unknown, column: Column, row: unknown) => void;
-  onNavigateToSubTable: (path: string, value: unknown, title: string) => void;
+  onNavigateToSubTable: (
+    path: string,
+    value: unknown,
+    title: string,
+    rowIndex?: number
+  ) => void;
   enableNavigation: boolean;
   showRowNumbers: boolean;
   customRenderers?: Record<
@@ -137,6 +142,7 @@ export const TableBody: React.FC<TableBodyProps> = ({
             key={index}
             hoverable={!!onRowClick}
             onClick={() => onRowClick?.(row, index)}
+            className={isEditingEnabled ? "group" : ""}
             style={{
               backgroundColor: isRowSelected ? "#e3f2fd" : undefined,
             }}
@@ -148,7 +154,6 @@ export const TableBody: React.FC<TableBodyProps> = ({
                   width: "120px",
                   minWidth: "120px",
                   textAlign: "center",
-                  padding: "8px",
                 }}
               >
                 <RowActions
@@ -214,7 +219,9 @@ export const TableBody: React.FC<TableBodyProps> = ({
                   column={column}
                   row={row}
                   value={value}
-                  onNavigateToSubTable={onNavigateToSubTable}
+                  onNavigateToSubTable={(path, value, title) =>
+                    onNavigateToSubTable(path, value, title, index)
+                  }
                   onCellClick={onCellClick}
                   onCellDoubleClick={(value, column, row) => {
                     if (isInlineEditingEnabled) {
@@ -223,6 +230,7 @@ export const TableBody: React.FC<TableBodyProps> = ({
                   }}
                   enableNavigation={enableNavigation}
                   customRenderers={customRenderers}
+                  rowIndex={index}
                 />
               );
             })}

@@ -14,11 +14,18 @@ export class NavigationManager {
   navigateToSubTable(
     path: string,
     value: unknown,
-    title: string
+    title: string,
+    rootDocumentIndex?: number
   ): NavigationResult {
     try {
       const analysis = this.analyzeNavigationTarget(value);
-      const newItem = this.createNavigationItem(path, value, title, analysis);
+      const newItem = this.createNavigationItem(
+        path,
+        value,
+        title,
+        analysis,
+        rootDocumentIndex
+      );
 
       this.stack.push(newItem);
       this.notifyListeners();
@@ -82,6 +89,20 @@ export class NavigationManager {
     if (value === null || value === undefined) return false;
     if (Array.isArray(value)) return value.length > 0;
     if (typeof value === "object") return true;
+
+    // Check if it's a JSON string that can be parsed
+    if (typeof value === "string") {
+      try {
+        const parsed = JSON.parse(value);
+        return (
+          (typeof parsed === "object" && parsed !== null) ||
+          Array.isArray(parsed)
+        );
+      } catch {
+        return false;
+      }
+    }
+
     return false;
   }
 
@@ -94,38 +115,60 @@ export class NavigationManager {
   }
 
   private analyzeNavigationTarget(value: unknown): NavigationAnalysis {
-    if (Array.isArray(value)) {
-      const analysis = ArrayAnalyzer.analyzeContent(value);
+    // Handle JSON strings by parsing them first
+    let parsedValue = value;
+    if (typeof value === "string") {
+      try {
+        parsedValue = JSON.parse(value);
+      } catch {
+        // If it's not valid JSON, treat as primitive
+        return {
+          type: "primitive",
+          processedData: [value],
+          displayTitle: "Value",
+          analysis: null,
+        };
+      }
+    }
+
+    if (Array.isArray(parsedValue)) {
+      const analysis = ArrayAnalyzer.analyzeContent(parsedValue);
       let processedData: unknown[];
       let displayTitle: string;
 
       switch (analysis.type) {
         case "objects":
           // Arrays of objects - use the array as-is for column detection
-          processedData = value;
-          displayTitle = ArrayAnalyzer.getNavigationTitle(value, "objects");
+          processedData = parsedValue;
+          displayTitle = ArrayAnalyzer.getNavigationTitle(
+            parsedValue,
+            "objects"
+          );
           break;
         case "primitives":
           // Arrays of primitives - create array table format
-          processedData = ArrayAnalyzer.createArrayTableData(value);
-          displayTitle = ArrayAnalyzer.getNavigationTitle(value, "primitives");
+          processedData = ArrayAnalyzer.createArrayTableData(parsedValue);
+          displayTitle = ArrayAnalyzer.getNavigationTitle(
+            parsedValue,
+            "primitives"
+          );
           break;
         case "mixed":
           // Mixed arrays - create specialized mixed array format with recursive processing
-          processedData = ArrayAnalyzer.createMixedArrayData(value);
-          displayTitle = ArrayAnalyzer.getNavigationTitle(value, "mixed");
+          processedData = ArrayAnalyzer.createMixedArrayData(parsedValue);
+          displayTitle = ArrayAnalyzer.getNavigationTitle(parsedValue, "mixed");
           break;
         case "empty":
           processedData = [];
-          displayTitle = ArrayAnalyzer.getNavigationTitle(value, "empty");
+          displayTitle = ArrayAnalyzer.getNavigationTitle(parsedValue, "empty");
           break;
         case "nulls":
-          processedData = ArrayAnalyzer.createArrayTableData(value);
-          displayTitle = ArrayAnalyzer.getNavigationTitle(value, "nulls");
+          processedData = ArrayAnalyzer.createArrayTableData(parsedValue);
+          displayTitle = ArrayAnalyzer.getNavigationTitle(parsedValue, "nulls");
           break;
         default:
-          processedData = value;
-          displayTitle = ArrayAnalyzer.getArrayDisplayText(value);
+          processedData = parsedValue;
+          displayTitle = ArrayAnalyzer.getArrayDisplayText(parsedValue);
       }
 
       return {
@@ -134,17 +177,17 @@ export class NavigationManager {
         displayTitle,
         analysis,
       };
-    } else if (typeof value === "object" && value !== null) {
+    } else if (typeof parsedValue === "object" && parsedValue !== null) {
       return {
         type: "object",
-        processedData: [value],
+        processedData: [parsedValue],
         displayTitle: "Object",
         analysis: null,
       };
     } else {
       return {
         type: "primitive",
-        processedData: [value],
+        processedData: [value], // Use original value for display
         displayTitle: "Value",
         analysis: null,
       };
@@ -155,7 +198,8 @@ export class NavigationManager {
     path: string,
     value: unknown,
     title: string,
-    analysis: NavigationAnalysis
+    analysis: NavigationAnalysis,
+    rootDocumentIndex?: number
   ): NavigationStackItem {
     const parentTitle =
       this.stack.length > 0 ? this.stack[this.stack.length - 1].title : "Root";
@@ -165,12 +209,17 @@ export class NavigationManager {
         ? this.stack[this.stack.length - 1].breadcrumbPath
         : [];
 
+    // Use the original field name (path) instead of the display title for breadcrumb
+    // This ensures the update path uses the correct field names
+    const breadcrumbItem = path || analysis.displayTitle;
+
     return {
       path,
       title: analysis.displayTitle,
       data: analysis.processedData,
       parentTitle,
-      breadcrumbPath: [...breadcrumbPath, analysis.displayTitle],
+      breadcrumbPath: [...breadcrumbPath, breadcrumbItem],
+      rootDocumentIndex,
     };
   }
 

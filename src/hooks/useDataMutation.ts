@@ -4,7 +4,9 @@ import { DataChange, EditState, EditableTableOptions } from "../types/editing";
 export const useDataMutation = (
   initialData: unknown[],
   options: EditableTableOptions,
-  currentNavigationData?: unknown[]
+  currentNavigationData?: unknown[],
+  navigationPath?: string[],
+  rootDocumentIndex?: number
 ) => {
   const [data, setData] = useState(initialData);
   const [originalData] = useState(initialData);
@@ -74,7 +76,14 @@ export const useDataMutation = (
       );
       setChanges((prev) => [...prev, change]);
 
-      options.onFieldUpdate?.(rowIndex, field, newValue, oldValue);
+      options.onFieldUpdate?.(
+        rowIndex,
+        field,
+        newValue,
+        oldValue,
+        navigationPath,
+        rootDocumentIndex
+      );
     },
     [data, options]
   );

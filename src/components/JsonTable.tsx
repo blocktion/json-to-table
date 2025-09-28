@@ -64,7 +64,12 @@ export const JsonTable: React.FC<JsonTableProps> = ({
       onFieldDelete,
       onBulkDelete,
     } as EditableTableOptions,
-    navigationState.currentData
+    navigationState.currentData,
+    navigationState.breadcrumb,
+    navigationState.stack.length > 0
+      ? navigationState.stack[navigationState.stack.length - 1]
+          .rootDocumentIndex
+      : undefined
   );
 
   // Validation
@@ -209,7 +214,12 @@ export const JsonTable: React.FC<JsonTableProps> = ({
           options={options}
           onRowClick={onRowClick}
           onCellClick={onCellClick}
-          onNavigateToSubTable={navigateToSubTable}
+          onNavigateToSubTable={(path, value, title, rowIndex) => {
+            // For root table navigation, pass the row index as root document index
+            const rootDocIndex =
+              navigationState.stack.length === 0 ? rowIndex : undefined;
+            navigateToSubTable(path, value, title, rootDocIndex);
+          }}
           customRenderers={customRenderers}
           // New editing props
           editState={editState}

@@ -18,6 +18,7 @@ interface TableHeaderProps {
   onSort: (columnKey: string) => void;
   enableSorting: boolean;
   showRowNumbers: boolean;
+  enableEditing?: boolean;
 }
 
 export const TableHeader: React.FC<TableHeaderProps> = ({
@@ -26,6 +27,7 @@ export const TableHeader: React.FC<TableHeaderProps> = ({
   onSort,
   enableSorting,
   showRowNumbers,
+  enableEditing = false,
 }) => {
   const { theme } = useTheme();
 
@@ -60,6 +62,19 @@ export const TableHeader: React.FC<TableHeaderProps> = ({
   return (
     <StyledTableHeader>
       <tr>
+        {/* Row Actions Column Header */}
+        {enableEditing && (
+          <StyledTableHeaderCell
+            style={{
+              width: "120px",
+              minWidth: "120px",
+              textAlign: "center",
+              boxSizing: "border-box",
+            }}
+          >
+            Actions
+          </StyledTableHeaderCell>
+        )}
         {showRowNumbers && (
           <StyledTableHeaderCell
             style={{

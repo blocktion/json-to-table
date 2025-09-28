@@ -22,7 +22,12 @@ interface TableContainerProps {
   options: TableOptions;
   onRowClick?: (row: unknown, index: number) => void;
   onCellClick?: (value: unknown, column: Column, row: unknown) => void;
-  onNavigateToSubTable: (path: string, value: unknown, title: string) => void;
+  onNavigateToSubTable: (
+    path: string,
+    value: unknown,
+    title: string,
+    rowIndex?: number
+  ) => void;
   customRenderers?: Record<
     string,
     (value: unknown, row: unknown) => React.ReactNode
@@ -199,6 +204,7 @@ export const TableContainer: React.FC<TableContainerProps> = ({
             onSort={handleSort}
             enableSorting={enableSorting}
             showRowNumbers={showRowNumbers}
+            enableEditing={options.enableEditing}
           />
           <TableBody
             data={displayData}
