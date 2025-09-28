@@ -1,6 +1,6 @@
 import React from "react";
 import { Column } from "../../types";
-import { NavigableCell } from "../NavigableCell";
+import { NavigableCell } from "./NavigableCell";
 import { useTheme } from "../../styles/theme-provider";
 import { TableCell } from "../../styles/styled-components";
 

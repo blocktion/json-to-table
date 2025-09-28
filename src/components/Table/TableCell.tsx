@@ -2,7 +2,7 @@ import React from "react";
 import { Column } from "../../types";
 import { ObjectUtils } from "../../utils/objectUtils";
 import { ArrayAnalyzer } from "../../utils/arrayUtils";
-import { NavigableCell } from "../NavigableCell";
+import { NavigableCell } from "../Cells/NavigableCell";
 
 interface TableCellProps {
   column: Column;
