@@ -1,6 +1,6 @@
 {
   "name": "@blocktion/json-to-table",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A powerful, modular React component for converting JSON data to navigable tables with advanced features like automatic column detection, theming, and sub-table navigation. Part of the Blocktion SaaS project ecosystem.",
   "main": "./dist/index.js",
   "module": "./dist/index.js",
