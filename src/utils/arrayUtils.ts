@@ -117,7 +117,12 @@ export class ArrayAnalyzer {
       const isNavigable = this.isItemNavigable(item);
 
       // For objects, preserve the original object structure instead of wrapping in array
-      if (itemType === "object" && item && typeof item === "object" && !Array.isArray(item)) {
+      if (
+        itemType === "object" &&
+        item &&
+        typeof item === "object" &&
+        !Array.isArray(item)
+      ) {
         return {
           index: index + 1,
           ...(item as Record<string, unknown>),
