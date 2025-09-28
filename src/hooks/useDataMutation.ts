@@ -1,9 +1,10 @@
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import { DataChange, EditState, EditableTableOptions } from "../types/editing";
 
 export const useDataMutation = (
   initialData: unknown[],
-  options: EditableTableOptions
+  options: EditableTableOptions,
+  currentNavigationData?: unknown[]
 ) => {
   const [data, setData] = useState(initialData);
   const [originalData] = useState(initialData);
@@ -17,6 +18,13 @@ export const useDataMutation = (
     selectedRows: new Set(),
     isBulkMode: false,
   });
+
+  // Sync with navigation data when it changes
+  useEffect(() => {
+    if (currentNavigationData) {
+      setData(currentNavigationData);
+    }
+  }, [currentNavigationData]);
 
   const deleteRow = useCallback(
     (rowIndex: number) => {

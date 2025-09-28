@@ -53,15 +53,19 @@ export const JsonTable: React.FC<JsonTableProps> = ({
     saveChanges,
     discardChanges,
     hasChanges,
-  } = useDataMutation(data, {
-    ...options,
-    onDataChange,
-    onRowAdd,
-    onRowDelete,
-    onFieldUpdate,
-    onFieldDelete,
-    onBulkDelete,
-  } as EditableTableOptions);
+  } = useDataMutation(
+    data,
+    {
+      ...options,
+      onDataChange,
+      onRowAdd,
+      onRowDelete,
+      onFieldUpdate,
+      onFieldDelete,
+      onBulkDelete,
+    } as EditableTableOptions,
+    navigationState.currentData
+  );
 
   // Validation
   const { validateField, validateRow } = useValidation(
@@ -88,10 +92,11 @@ export const JsonTable: React.FC<JsonTableProps> = ({
   const effectiveData = useMemo(() => {
     if (!processedData) return null;
 
-    // Use editable data if editing is enabled, otherwise use navigation data
-    const currentData = options.enableEditing
-      ? editableData
-      : navigationState.currentData;
+    // Use editable data if editing is enabled and we have editable data, otherwise use navigation data
+    const currentData =
+      options.enableEditing && editableData
+        ? editableData
+        : navigationState.currentData;
 
     // If we have no current data, return the original processed data
     if (
