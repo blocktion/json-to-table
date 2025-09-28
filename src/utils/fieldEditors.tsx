@@ -16,7 +16,7 @@ export const TextEditor = forwardRef<HTMLInputElement, FieldEditorProps>(
       <input
         ref={ref}
         type="text"
-        value={String(value || "")}
+        value={value === null || value === undefined ? "" : String(value)}
         onChange={(e) => onChange(e.target.value)}
         onKeyDown={onKeyDown}
         onBlur={onBlur}
@@ -33,11 +33,11 @@ export const NumberEditor = forwardRef<HTMLInputElement, FieldEditorProps>(
       <input
         ref={ref}
         type="number"
-        value={Number(value) || 0}
-        onChange={(e) => onChange(Number(e.target.value))}
+        value={value === null || value === undefined ? "" : Number(value)}
+        onChange={(e) => onChange(e.target.value === "" ? null : Number(e.target.value))}
         onKeyDown={onKeyDown}
         onBlur={onBlur}
-        className={className}
+        className={`${className || ""} [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none`}
         {...props}
       />
     );
