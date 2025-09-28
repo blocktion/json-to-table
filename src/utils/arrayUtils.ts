@@ -116,6 +116,20 @@ export class ArrayAnalyzer {
       const itemType = this.getItemType(item);
       const isNavigable = this.isItemNavigable(item);
 
+      // For objects, preserve the original object structure instead of wrapping in array
+      if (itemType === "object" && item && typeof item === "object" && !Array.isArray(item)) {
+        return {
+          index: index + 1,
+          ...(item as Record<string, unknown>),
+          // Store navigation info as metadata (not displayed columns)
+          _navigationInfo: {
+            type: itemType,
+            isNavigable,
+            nestedAnalysis: null,
+          },
+        };
+      }
+
       return {
         index: index + 1,
         value: item,

@@ -89,10 +89,11 @@ export const TableCell: React.FC<TableCellProps> = ({
   const formatValue = (val: unknown): string => {
     if (val === null || val === undefined) return "";
     if (typeof val === "string") {
-      return val.length > 50 ? val.substring(0, 47) + "..." : val;
+      return val.length > 30 ? val.substring(0, 27) + "..." : val;
     }
     if (typeof val === "object" && val !== null) {
-      return JSON.stringify(val);
+      const jsonStr = JSON.stringify(val);
+      return jsonStr.length > 30 ? jsonStr.substring(0, 27) + "..." : jsonStr;
     }
     return String(val);
   };
@@ -101,7 +102,7 @@ export const TableCell: React.FC<TableCellProps> = ({
   if (column.renderer) {
     return (
       <td
-        className="px-6 py-4 whitespace-nowrap text-body-sm text-obsidian align-top"
+        className="px-6 py-4 text-body-sm text-obsidian align-top max-w-xs"
         style={{
           width: showRowNumbers ? "auto" : column.width || "auto",
         }}
@@ -116,7 +117,7 @@ export const TableCell: React.FC<TableCellProps> = ({
   if (customRenderers[column.cleanKey]) {
     return (
       <td
-        className="px-6 py-4 whitespace-nowrap text-body-sm text-obsidian align-top"
+        className="px-6 py-4 text-body-sm text-obsidian align-top max-w-xs"
         style={{
           width: showRowNumbers ? "auto" : column.width || "auto",
         }}
@@ -216,7 +217,7 @@ export const TableCell: React.FC<TableCellProps> = ({
 
     return (
       <td
-        className="px-6 py-4 whitespace-nowrap text-body-sm text-obsidian align-top"
+        className="px-6 py-4 text-body-sm text-obsidian align-top max-w-xs"
         style={{
           width: showRowNumbers ? "auto" : column.width || "auto",
         }}
@@ -235,16 +236,17 @@ export const TableCell: React.FC<TableCellProps> = ({
   // Regular cell
   return (
     <td
-      className="px-6 py-4 whitespace-nowrap text-body-sm text-obsidian align-top"
+      className="px-6 py-4 text-body-sm text-obsidian align-top max-w-xs"
       style={{ width: column.width }}
       onClick={handleCellClick}
     >
       <span
-        className={
+        className={`truncate block ${
           value === null || value === undefined
             ? "text-jet-grey"
             : "text-obsidian"
-        }
+        }`}
+        title={typeof value === "string" ? value : undefined}
       >
         {formatValue(value)}
       </span>
